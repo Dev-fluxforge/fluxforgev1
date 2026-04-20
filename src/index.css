@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-primary: #00A86B;
+  --color-mint: #00D68F;
+  --color-void-black: #0A0F0D;
+  --color-deep-moss: #111A15;
+  --color-forest-edge: #1E3028;
+  --color-sage: #4D7A62;
+  --color-pale-mint: #D4EDE2;
+
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-badge: 4px;
+}
+
+@layer base {
+  body {
+    @apply bg-void-black text-pale-mint font-sans antialiased selection:bg-primary/30 selection:text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold text-white tracking-tight;
+  }
+
+  .section-eyebrow {
+    @apply font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-mint mb-3 md:mb-4;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-void-black font-medium px-6 py-2.5 rounded-[--radius-button] transition-all hover:bg-mint hover:shadow-[0_0_24px_rgba(0,168,107,0.25)] active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply border-[1.5px] border-primary text-primary font-medium px-6 py-2.5 rounded-[--radius-button] transition-all hover:bg-primary hover:text-void-black active:scale-95;
+  }
+
+  .card-surface {
+    @apply bg-deep-moss border border-forest-edge rounded-[--radius-card] shadow-sm;
+  }
+
+  .glass-nav {
+    @apply sticky top-0 z-50 bg-deep-moss/80 backdrop-blur-xl border-b border-forest-edge h-16;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.rotating-word-container {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+  vertical-align: bottom;
+}
+
+@keyframes slideUpFadeIn {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUpFadeOut {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100%); opacity: 0; }
+}
