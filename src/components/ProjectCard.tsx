@@ -76,9 +76,9 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
           {project.techStack.map(tag => (
             <span 
               key={tag} 
-              className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full border border-forest-edge bg-[#141E19] text-mint/90 shadow-sm transition-all hover:bg-forest-edge hover:text-white"
+              className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md border border-mint/10 bg-mint/5 text-mint/90 transition-colors hover:bg-mint/10 hover:border-mint/30"
             >
-              # {tag}
+              {tag}
             </span>
           ))}
         </div>
