@@ -1,6 +1,22 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Github, ExternalLink } from 'lucide-react';
+import { 
+  Github, 
+  ExternalLink, 
+  Code2, 
+  Wind, 
+  GitBranch, 
+  Cpu, 
+  Layers, 
+  Terminal, 
+  Zap, 
+  Database, 
+  Globe, 
+  Layout, 
+  FileCode, 
+  Image as ImageIcon, 
+  Palette 
+} from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 
 type ProjectProps = {
@@ -14,6 +30,32 @@ type ProjectProps = {
     liveDemo: string | null;
     status?: string;
   };
+};
+
+const techIconMap: Record<string, React.ElementType> = {
+  "Angular": Cpu,
+  "TypeScript": Code2,
+  "Tailwind CSS": Wind,
+  "Tailwind": Wind,
+  "Vercel": Zap,
+  "Git": GitBranch,
+  "HTML5": FileCode,
+  "HTML": FileCode,
+  "CSS3": Layers,
+  "CSS": Layers,
+  "JavaScript": Terminal,
+  "JS": Terminal,
+  "MySQL": Database,
+  "Oracle": Database,
+  "PHP": Globe,
+  "Bootstrap": Layout,
+  "Adobe Photoshop": ImageIcon,
+  "CorelDRAW": Palette,
+  "Adobe Illustrator": Palette,
+  "Canva": ImageIcon,
+  "Figma": Layout,
+  "PixelLab": ImageIcon,
+  "Inkscape": Palette
 };
 
 const categoryStyles: Record<string, { badge: string; gradient: string }> = {
@@ -32,8 +74,8 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      className="card-surface overflow-hidden group hover:shadow-[0_16px_48px_rgba(0,168,107,0.12)] transition-all flex flex-col h-full"
+      whileHover={{ y: -6, scale: 1.01 }}
+      className="card-surface overflow-hidden group hover:shadow-[0_20px_60px_rgba(0,168,107,0.15)] hover:border-primary/40 transition-all duration-300 flex flex-col h-full"
     >
       {/* Thumbnail */}
       <div className={cn(
@@ -71,16 +113,20 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
           {project.description}
         </p>
 
-        {/* Tech Stack */}
+        {/* Tech Stack Icons */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {project.techStack.map(tag => (
-            <span 
-              key={tag} 
-              className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md border border-mint/10 bg-mint/5 text-mint/90 transition-colors hover:bg-mint/10 hover:border-mint/30"
-            >
-              {tag}
-            </span>
-          ))}
+          {project.techStack.map(tag => {
+            const IconComponent = techIconMap[tag] || Code2;
+            return (
+              <div 
+                key={tag} 
+                title={tag}
+                className="w-8 h-8 flex items-center justify-center rounded-md border border-mint/10 bg-mint/5 text-mint/90 transition-all hover:bg-mint/10 hover:border-mint/30 hover:scale-110"
+              >
+                <IconComponent size={16} strokeWidth={1.5} />
+              </div>
+            );
+          })}
         </div>
 
         {/* Actions */}
@@ -107,4 +153,4 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
       </div>
     </motion.div>
   );
-}
+};
