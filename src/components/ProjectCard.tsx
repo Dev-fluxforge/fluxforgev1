@@ -25,11 +25,13 @@ type ProjectProps = {
     title: string;
     category: string;
     techStack: string[];
+    image?: string;
     description: string;
     github: string;
     liveDemo: string | null;
     status?: string;
   };
+  onClick?: () => void;
 };
 
 const techIconMap: Record<string, React.ElementType> = {
@@ -68,26 +70,37 @@ const categoryStyles: Record<string, { badge: string; gradient: string }> = {
   "Personal": { badge: "bg-[#1a0a2a] text-[#C084FC]", gradient: "from-[#1a1030] to-[#2a1a50]" },
 };
 
-export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
+export const ProjectCard: React.FC<ProjectProps> = ({ project, onClick }) => {
   const style = categoryStyles[project.category] || categoryStyles.Personal;
   const initials = project.title.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
     <motion.div
+      layout
+      onClick={onClick}
       whileHover={{ y: -6, scale: 1.01 }}
-      className="card-surface overflow-hidden group hover:shadow-[0_20px_60px_rgba(0,168,107,0.15)] hover:border-primary/40 transition-all duration-300 flex flex-col h-full"
+      className="card-surface overflow-hidden group hover:shadow-[0_20px_60px_rgba(0,168,107,0.15)] hover:border-primary/40 transition-all duration-300 flex flex-col h-full cursor-pointer"
     >
       {/* Thumbnail */}
       <div className={cn(
-        "h-40 bg-gradient-to-br flex items-center justify-center relative",
+        "h-40 bg-gradient-to-br flex items-center justify-center relative overflow-hidden",
         style.gradient
       )}>
-        <span className="font-display font-black text-4xl text-white/90 tracking-tighter opacity-80">
-          {initials}
-        </span>
+        {project.image ? (
+          <img 
+            src={project.image} 
+            alt={project.title} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <span className="font-display font-black text-4xl text-white/90 tracking-tighter opacity-80 select-none">
+            {initials}
+          </span>
+        )}
         
         {project.status && (
-          <span className="absolute top-3 right-3 bg-forest-edge text-sage text-[10px] px-2 py-0.5 rounded font-mono">
+          <span className="absolute top-3 right-3 bg-forest-edge/90 backdrop-blur-sm text-sage text-[10px] px-2 py-0.5 rounded font-mono z-10">
             {project.status}
           </span>
         )}
@@ -135,6 +148,7 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="flex-1 flex items-center justify-center gap-2 btn-primary py-2 text-xs"
           >
             <Github size={14} /> GitHub
@@ -144,6 +158,7 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
               href={project.liveDemo}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="flex-1 flex items-center justify-center gap-2 border border-forest-edge text-sage py-2 text-xs rounded-[--radius-button] hover:border-primary hover:text-primary transition-all"
             >
               <ExternalLink size={14} /> Demo

@@ -1,9 +1,26 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Download, Mail, Phone, MapPin, GraduationCap, Award, Languages } from 'lucide-react';
+import { Download, Mail, Phone, MapPin, GraduationCap, Award, Languages, Briefcase } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
+import { EXPERIENCE } from '@/src/constants';
 
 export default function About() {
+  const calculateTotalExperience = () => {
+    if (EXPERIENCE.length === 0) return 0;
+    
+    // Extract years from strings like "May 2022 – Nov 2023" or "Sep 2023 – Present"
+    const years = EXPERIENCE.map(exp => {
+      const match = exp.period.match(/\d{4}/);
+      return match ? parseInt(match[0]) : new Date().getFullYear();
+    });
+    
+    const earliestYear = Math.min(...years);
+    const currentYear = new Date().getFullYear();
+    return currentYear - earliestYear;
+  };
+
+  const totalYears = calculateTotalExperience();
+
   return (
     <div className="space-y-32 pb-32">
       {/* Page Hero */}
@@ -64,6 +81,7 @@ export default function About() {
             </div>
 
             <div className="space-y-5 border-t border-forest-edge pt-8">
+              <InfoRow icon={<Briefcase size={16} />} text={`${totalYears}+ Years Experience`} />
               <InfoRow icon={<MapPin size={16} />} text="Saki, Oyo, Nigeria" />
               <InfoRow icon={<GraduationCap size={16} />} text="B.Tech Computer Science — LAUTECH" />
               <InfoRow icon={<Award size={16} />} text="Professional Diploma, Front-End SE" />
@@ -73,7 +91,8 @@ export default function About() {
             </div>
 
             <a 
-              href="#" 
+              href="/CV_Muhammad_Adeniyi_Badmus.txt" 
+              download="CV_Muhammad_Adeniyi_Badmus.txt"
               className="btn-primary w-full flex items-center justify-center gap-2 py-3 mt-8 text-sm"
             >
               <Download size={16} /> Download CV

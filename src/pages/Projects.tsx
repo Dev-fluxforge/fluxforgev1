@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ProjectCard } from '@/src/components/ProjectCard';
+import { ProjectModal } from '@/src/components/ProjectModal';
 import { PROJECTS } from '@/src/constants';
 import { cn } from '@/src/lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
@@ -9,6 +10,13 @@ const categories = ["All", "Company", "Client", "Business", "Internship", "Non-P
 export default function Projects() {
   const [activeTab, setActiveTab] = useState("All");
   const [activeTech, setActiveTech] = useState("All");
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProjectClick = (project: any) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
   const techStacks = useMemo(() => {
     const stacks = new Set<string>();
@@ -110,7 +118,7 @@ export default function Projects() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={project} onClick={() => handleProjectClick(project)} />
               </motion.div>
             ))}
           </AnimatePresence>
@@ -126,6 +134,13 @@ export default function Projects() {
           </motion.div>
         )}
       </section>
+
+      {/* Detail Modal */}
+      <ProjectModal 
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
