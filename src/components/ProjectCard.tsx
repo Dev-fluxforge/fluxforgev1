@@ -78,8 +78,8 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project, onClick }) => {
     <motion.div
       layout
       onClick={onClick}
-      whileHover={{ y: -6, scale: 1.01 }}
-      className="card-surface overflow-hidden group hover:shadow-[0_20px_60px_rgba(0,168,107,0.15)] hover:border-primary/40 transition-all duration-300 flex flex-col h-full cursor-pointer"
+      whileHover={{ y: -8, scale: 1.02 }}
+      className="card-surface overflow-hidden group hover:shadow-[0_20px_80px_rgba(0,168,107,0.2)] hover:border-primary/50 hover:ring-1 hover:ring-primary/20 transition-all duration-300 flex flex-col h-full cursor-pointer"
     >
       {/* Thumbnail */}
       <div className={cn(
